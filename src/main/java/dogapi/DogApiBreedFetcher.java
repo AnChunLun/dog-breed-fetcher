@@ -3,6 +3,7 @@ package dogapi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -34,22 +35,27 @@ public class DogApiBreedFetcher implements BreedFetcher {
             }
 
             String jsonData = response.body().string();
-            JSONObject json = new JSONObject(jsonData);
-
-            String status = json.getString("status");
-            if (!"success".equals(status)) {
-                throw new BreedNotFoundException("Breed not found: " + breed);
-            }
-
-            JSONArray subBreedsArray = json.getJSONArray("message");
-            List<String> subBreeds = new ArrayList<>();
-            for (int i = 0; i < subBreedsArray.length(); i++) {
-                subBreeds.add(subBreedsArray.getString(i));
-            }
-            return subBreeds;
+            return getSubBreedsList(breed, jsonData);
 
         } catch (IOException e) {
             throw new BreedNotFoundException("API call failed: " + e.getMessage());
         }
+    }
+
+    @NotNull
+    private static List<String> getSubBreedsList(String breed, String jsonData) {
+        JSONObject json = new JSONObject(jsonData);
+
+        String status = json.getString("status");
+        if (!"success".equals(status)) {
+            throw new BreedNotFoundException("Breed not found: " + breed);
+        }
+
+        JSONArray subBreedsArray = json.getJSONArray("message");
+        List<String> subBreeds = new ArrayList<>();
+        for (int i = 0; i < subBreedsArray.length(); i++) {
+            subBreeds.add(subBreedsArray.getString(i));
+        }
+        return subBreeds;
     }
 }

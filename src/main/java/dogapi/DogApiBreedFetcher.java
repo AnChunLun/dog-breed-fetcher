@@ -43,7 +43,6 @@ public class DogApiBreedFetcher implements BreedFetcher {
     }
 
     // Reads data from the jsonData and return a list of the subBreeds with key breed
-    @NotNull
     private static List<String> getSubBreedsList(String breed, String jsonData) throws BreedNotFoundException {
         JSONObject json = new JSONObject(jsonData);
 

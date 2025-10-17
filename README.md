@@ -86,7 +86,7 @@ Note: The example in the documentation doesn't show it, but if you specify a bre
 
 ### Task 3:
 
-- [ ] Complete the `Main` class.
+- [X] Complete the `Main` class.
 
 ### Task 4:
 

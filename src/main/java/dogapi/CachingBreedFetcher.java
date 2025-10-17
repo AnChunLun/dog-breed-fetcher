@@ -20,7 +20,7 @@ public class CachingBreedFetcher implements BreedFetcher {
             return cache.get(key);
         }
 
-        // Count this as a call even if it fails
+        // Count this as a call even if it fails because of test cases idk why tho
         callsMade++;
         List<String> subBreeds = fetcher.getSubBreeds(key);
         cache.put(key, subBreeds);
